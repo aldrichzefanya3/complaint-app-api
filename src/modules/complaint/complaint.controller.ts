@@ -50,7 +50,6 @@ export class ComplaintController {
             storage: diskStorage({
                 destination: join(__dirname, '../../..', 'public/attachments'),
                 filename: (req, file, cb) => {
-                    
                     const originalFileName = file.originalname.split('.');
                     const fileExt = originalFileName[originalFileName.length - 1];
 
@@ -65,7 +64,7 @@ export class ComplaintController {
             const auth = req.user;
 
             payload['ImageFileName'] = AttachmentFiles[0]?.filename;
-            
+
             const result = await this.complaintService.createComplaint(payload, auth);
 
             return ResponseFormatter.response(result, res);
@@ -80,8 +79,8 @@ export class ComplaintController {
         try {
             const payload = {
                 ID: req.params['ID'],
-                ...req.body
-            }
+                ...req.body,
+            };
 
             const result = await this.complaintService.updateComplaintByID(payload);
 

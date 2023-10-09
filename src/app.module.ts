@@ -23,7 +23,7 @@ import { OAuthModule } from './modules/oauth/oauth.module';
             },
         }),
         ServeStaticModule.forRoot({
-            serveRoot: '/public/attachments',
+            serveRoot: '/api/v1/public/attachments',
             rootPath: join(__dirname, '..', '/public/attachments'),
         }),
         ConfigModule.forRoot({

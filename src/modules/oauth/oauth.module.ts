@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { JwtService, JwtModule } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { User } from 'src/entities/users.entity';

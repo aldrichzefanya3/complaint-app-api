@@ -29,24 +29,24 @@ export class ComplaintRepository {
             },
             Category: {
                 ID: true,
-                Tittle: true
-            }
+                Tittle: true,
+            },
         };
 
         const relations: FindOptionsRelations<Complaint> = {
-           User: true,
-           Category: true,
-           Admin: true 
+            User: true,
+            Category: true,
+            Admin: true,
         };
 
         const condition: FindOptionsWhere<Complaint> | FindOptionsWhere<Complaint>[] = { ID: Equal(complaintID) };
-        
+
         const result = await this.complaintRepository.findOne({
-            select: selectedColumn, 
+            select: selectedColumn,
             where: condition,
-            relations: relations
+            relations: relations,
         });
-        
+
         if (!result) {
             throw new BadRequestException('NOT FOUND');
         }
@@ -76,14 +76,14 @@ export class ComplaintRepository {
             },
             Category: {
                 ID: true,
-                Tittle: true
-            }
+                Tittle: true,
+            },
         };
 
         const relations: FindOptionsRelations<Complaint> = {
-           User: true,
-           Category: true,
-           Admin: true 
+            User: true,
+            Category: true,
+            Admin: true,
         };
 
         try {
@@ -91,12 +91,12 @@ export class ComplaintRepository {
                 select: selectedColumn,
                 relations: relations,
                 order: {
-                    CreatedAt: sort
+                    CreatedAt: sort,
                 },
                 skip: offset,
                 take: limit,
             });
-            
+
             return result;
         } catch (err) {
             throw err;
@@ -117,9 +117,9 @@ export class ComplaintRepository {
 
     async update(ID: any, payload: any) {
         try {
-            await this.complaintRepository.update({ ID: Equal(ID)}, payload);
+            await this.complaintRepository.update({ ID: Equal(ID) }, payload);
 
-            const data =await this.getOne({ ID: Equal(ID) });
+            const data = await this.getOne({ ID: Equal(ID) });
 
             return data;
         } catch (err) {

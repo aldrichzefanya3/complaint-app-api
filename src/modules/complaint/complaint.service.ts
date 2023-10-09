@@ -4,7 +4,6 @@ import { CategoryRepository } from 'src/respositories/category.repository';
 import { ComplaintRepository } from 'src/respositories/complaint.repository';
 import { UserRepository } from 'src/respositories/users.repository';
 import { DateFormatter } from 'src/utils/date-formatter.util';
-import { Equal } from 'typeorm';
 
 @Injectable()
 export class ComplaintService {
@@ -21,10 +20,10 @@ export class ComplaintService {
         const pagination = {
             Data: result,
             CurrentPage: payload.Page,
-            LastPage: Math.ceil(count/payload.Limit),
-            Limit: payload.Limit,  
+            LastPage: Math.ceil(count / payload.Limit),
+            Limit: payload.Limit,
             Total: count,
-        }
+        };
 
         return pagination;
     }
@@ -45,24 +44,23 @@ export class ComplaintService {
         const user = await this.checkUserByID(sub);
 
         const category = await this.checkCategoryByID(CategoryID);
- 
+
         payload['UserID'] = user.ID;
         payload['CategoryID'] = category.ID;
         payload['CreatedBy'] = fullname;
         payload['CreatedAt'] = DateFormatter.getTimestamp();
-        
+
         let details = {};
         if (!Details && ImageFileName) {
-            details[`${ImageName}`] = ImageFileName;
+            details[`${ImageName}`] = `${process.env.BASE_URL_APP}${ImageFileName}`;
 
             payload['Details'] = JSON.stringify(details);
         } else if (Details && ImageFileName) {
             details = JSON.parse(Details);
 
-            details[`${ImageName}`] = ImageFileName;
+            details[`${ImageName}`] = `${process.env.BASE_URL_APP}${ImageFileName}`;
             payload['Details'] = JSON.stringify(details);
         }
-        
 
         const result = await this.complaintRepository.create(payload);
 
@@ -74,7 +72,7 @@ export class ComplaintService {
 
         return data;
     }
-    
+
     async checkCategoryByID(categoryID: number) {
         const data = await this.categoryRepository.getByID(categoryID);
 
@@ -90,7 +88,7 @@ export class ComplaintService {
             AdminID: 'e7c5d378-002f-4da7-8fdb-042528cfa85e',
             Remark: Remark,
             IsRemarked: true,
-            UpdatedAt: DateFormatter.getTimestamp()
+            UpdatedAt: DateFormatter.getTimestamp(),
         };
 
         const result = await this.complaintRepository.update(ID, updatedComplaint);
