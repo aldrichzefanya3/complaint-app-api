@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 import { Admin } from './admins.entity';
 import { Category } from './categories.entity';
 import { User } from './users.entity';
+import { StringToJsonConverter } from 'src/transformers/string-to-json-converter.transformer';
 
 @Entity({ name: 'complaints' })
 export class Complaint {
@@ -25,6 +26,7 @@ export class Complaint {
 
     @Column({
         type: 'text',
+        transformer: new StringToJsonConverter()
     })
     Details: string;
 

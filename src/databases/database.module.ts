@@ -19,7 +19,7 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
                     database: configService.get('DB_NAME'),
                     entities: [join(__dirname, '../entities/*.entity.{ts,js}')],
                     synchronize: false,
-                    logging: true,
+                    logging: false,
                     cli: {
                         entitiesDir: 'src/entities',
                     },

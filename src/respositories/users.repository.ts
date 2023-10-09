@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import { User } from '../entities/users.entity';
 
@@ -17,8 +17,8 @@ export class UserRepository {
         return result;
     }
 
-    async getByID(UserID: string) {
-        const result = await this.userRepository.findOne({ where: { ID: UserID } });
+    async getByID(userID: string) {
+        const result = await this.userRepository.findOne({ where: { ID: Equal(userID) } });
 
         if (!result) {
             throw new BadRequestException('NOT FOUND');

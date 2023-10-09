@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 import { Category } from 'src/entities/categories.entity';
 
@@ -17,8 +17,8 @@ export class CategoryRepository {
         return result;
     }
 
-    async getByID(CategoryID: number) {
-        const result = await this.categoryRepository.findOne({ where: { ID: CategoryID } });
+    async getByID(categoryID: number) {
+        const result = await this.categoryRepository.findOne({ where: { ID: Equal(categoryID) } });
 
         if (!result) {
             throw new BadRequestException('NOT FOUND');

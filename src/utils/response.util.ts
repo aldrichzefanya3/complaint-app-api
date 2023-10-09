@@ -11,13 +11,13 @@ export class ResponseFormatter {
         return res.status(200).send(result);
     }
 
-    // static responseErrorMessage(message: string, res: any) {
-    //     const result = {
-    //         Message: message,
-    //         TimeZone: 'UTC',
-    //         EpochTime: DateFormatter.getTimestamp(),
-    //     };
+    static responseWithErrorMessage(errMessage: string, res: any) {
+        const result = {
+            Message: errMessage,
+            TimeZone: 'UTC',
+            EpochTime: DateFormatter.getTimestamp(),
+        };
 
-    //     return res.status(400).send(result);
-    // }
+        return res.status(400).send(result);
+    }
 }

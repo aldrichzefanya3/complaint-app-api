@@ -6,10 +6,10 @@ import { Request } from 'express';
 export class JWTGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
 
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
-        console.log(token)
+    async canActivate(ctx: ExecutionContext): Promise<boolean> {
+        const req = ctx.switchToHttp().getRequest();
+        const token = this.extractTokenFromHeader(req);
+
         if (!token) {
             throw new UnauthorizedException();
         }
@@ -18,15 +18,15 @@ export class JWTGuard implements CanActivate {
                 secret: process.env.JWT_SECRET_KEY,
             });
             
-            request['user'] = payload;
+            req['user'] = payload;
         } catch {
             throw new UnauthorizedException();
         }
         return true;
     }
 
-    private extractTokenFromHeader(request: Request): string | undefined {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    private extractTokenFromHeader(req: Request): string | undefined {
+        const [type, token] = req.headers.authorization?.split(' ') ?? [];
         return type === 'Bearer' ? token : undefined;
     }
 }
